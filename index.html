@@ -10,7 +10,7 @@
 <title>Workout</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   :root {
     --bg:        #0F0F13;
     --card:      #1A1A20;
@@ -24,7 +24,7 @@
     --rest-bg:   #15151A;
     --rest-acc:  #7C8AAE;
   }
-
+ 
   html, body {
     height: 100%;
     background: var(--bg);
@@ -33,13 +33,13 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
-
+ 
   #app { min-height: 100vh; display: flex; flex-direction: column; }
-
+ 
   /* ---- SCREENS ---- */
   .screen { display: none; flex-direction: column; min-height: 100vh; }
   .screen.active { display: flex; }
-
+ 
   /* ---- PICKER ---- */
   #picker { padding: 32px 20px 40px; }
   .brand-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
@@ -63,7 +63,7 @@
   .day-meta { font-size: 13px; color: var(--t2); margin-top: 2px; }
   .chevron { flex-shrink: 0; color: var(--t3); }
   .rest-icon-wrap { width: 36px; height: 36px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 12px; }
-
+ 
   /* ---- OVERVIEW ---- */
   #overview { display: none; flex-direction: column; }
   #overview.active { display: flex; }
@@ -109,7 +109,7 @@
   }
   .ex-desc.open { display: block; }
   .overview-footer { padding: 20px; }
-
+ 
   /* ---- ACTIVE / SHARED WORKOUT HEADER ---- */
   #workout { display: none; flex-direction: column; }
   #workout.active { display: flex; }
@@ -119,7 +119,7 @@
   .wh-day-name { font-size: 13px; font-weight: 700; color: var(--t2); }
   .progress-track { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--accent); border-radius: 999px; transition: width .4s ease; width: 0%; }
-
+ 
   /* ---- SET SCREEN ---- */
   #set-screen { flex: 1; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; }
   #set-screen.active { display: flex; }
@@ -139,7 +139,7 @@
   .pip { border-radius: 50%; transition: all .2s ease; flex-shrink: 0; }
   .set-label { font-size: 15px; color: var(--t2); margin-bottom: 8px; }
   .rep-target { font-size: 56px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 36px; font-family: monospace; }
-
+ 
   /* ---- REST SCREEN ---- */
   #rest-screen { flex: 1; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; }
   #rest-screen.active { display: flex; }
@@ -157,14 +157,14 @@
     display: flex; align-items: center; justify-content: center; gap: 6px;
     cursor: pointer;
   }
-
+ 
   /* ---- COMPLETE ---- */
   #complete-screen { flex: 1; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 24px; text-align: center; }
   #complete-screen.active { display: flex; }
   .complete-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--success); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
   .complete-title { font-size: 28px; font-weight: 800; letter-spacing: -.02em; margin-bottom: 8px; }
   .complete-sub { color: var(--t2); font-size: 15px; margin-bottom: 36px; }
-
+ 
   /* ---- BUTTONS ---- */
   .btn-primary {
     width: 100%; padding: 18px 24px; border-radius: 16px;
@@ -181,14 +181,14 @@
     display: flex; align-items: center; justify-content: center; gap: 8px;
     cursor: pointer; max-width: 320px;
   }
-
+ 
   /* SVG icon helpers */
   svg { display: inline-block; vertical-align: middle; }
 </style>
 </head>
 <body>
 <div id="app">
-
+ 
   <!-- PICKER -->
   <div class="screen active" id="picker">
     <div class="brand-row">
@@ -198,7 +198,7 @@
     <h1>Pick today's workout</h1>
     <div class="day-list" id="day-list"></div>
   </div>
-
+ 
   <!-- OVERVIEW -->
   <div class="screen" id="overview">
     <div class="overview-header">
@@ -227,7 +227,7 @@
       </button>
     </div>
   </div>
-
+ 
   <!-- ACTIVE WORKOUT WRAPPER -->
   <div class="screen" id="workout">
     <div class="workout-header">
@@ -240,7 +240,7 @@
       </div>
       <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
     </div>
-
+ 
     <!-- SET SCREEN -->
     <div id="set-screen">
       <div class="ex-counter" id="ss-counter"></div>
@@ -260,7 +260,7 @@
         Set Complete
       </button>
     </div>
-
+ 
     <!-- REST SCREEN -->
     <div id="rest-screen">
       <div class="rest-label" id="rest-label">RESTING</div>
@@ -285,7 +285,7 @@
         </button>
       </div>
     </div>
-
+ 
     <!-- COMPLETE -->
     <div id="complete-screen">
       <div class="complete-icon">
@@ -296,9 +296,9 @@
       <button class="btn-primary" onclick="showPicker()">Back to days</button>
     </div>
   </div>
-
+ 
 </div>
-
+ 
 <script>
 // ---- THEME ----
 const C = {
@@ -306,21 +306,21 @@ const C = {
   border: '#2A2A32', card: '#1A1A20', restBg: '#15151A', restAcc: '#7C8AAE',
   t1: '#FFFFFF', t2: '#9A9AA5', t3: '#6B6B76'
 };
-
+ 
 // ---- DATA ----
 const PLAN = {
-  1: { name: "Upper A", sub: "Push Emphasis", exercises: [
-    { name: "Barbell Bench Press", sets: 3, reps: "6-8", rest: 120, effort: "fail", description: "Lie on a flat bench, feet flat on floor. Grip bar slightly wider than shoulder-width. Lower bar with control to mid-chest, elbows at ~45° from torso, then press back up to full lock-out without bouncing off your chest." },
-    { name: "Weighted Pull-Ups", sets: 3, reps: "6-10", rest: 120, effort: "rpe8", description: "Hang from the bar with an overhand grip, hands just outside shoulder width. Pull your chest toward the bar by driving elbows down and back, avoid swinging or kipping. Lower under control to a full arm hang each rep. Add weight via belt or vest once bodyweight reps exceed ~15-20." },
-    { name: "Seated DB Shoulder Press", sets: 3, reps: "8-10", rest: 90, effort: "rpe8", description: "Sit on a bench with back support, dumbbells at shoulder height, palms facing forward. Press both dumbbells overhead until arms are extended without locking elbows aggressively, then lower back to shoulder height with control." },
+  1: { name: "Pull & Grip A", sub: "Vertical Pull + Forearm Endurance", exercises: [
+    { name: "Rock Hold Pull-Ups (working sets)", sets: 4, reps: "4-5", rest: 90, effort: "rpe7", description: "Use the rock climbing holds on the pull-up bar. Grip the holds firmly and pull your chest toward the bar by driving elbows down and back. Lower under full control to a dead hang each rep. Stop at 4-5 reps — do NOT go to failure. These sets are about practice, not exhaustion." },
+    { name: "Rock Hold Pull-Ups (AMRAP)", sets: 1, reps: "AMRAP", rest: 120, effort: "fail", description: "One all-out set after your working sets. Go until you can't complete another rep with good form. This is your progress benchmark — track the number each week. After this set, go immediately into negatives before resting." },
+    { name: "Pull-Up Negatives", sets: 1, reps: "3-5 slow", rest: 120, effort: "rpe8", description: "Immediately after your AMRAP set. Jump or step up to the top position (chin over bar), then lower yourself as slowly as possible — aim for 5-8 seconds per rep. These extend the stimulus after your muscles are already fatigued from the AMRAP." },
+    { name: "Lat Pulldown (wide grip)", sets: 3, reps: "10-12", rest: 90, effort: "fail", description: "Sit at the lat pulldown station, grip the bar wider than shoulder width. Pull the bar down to upper chest level by driving elbows down and back, leading with your lats rather than your arms, then let the bar rise with control back to full stretch." },
     { name: "Chest-Supported Row", sets: 2, reps: "8-10", rest: 90, effort: "fail", description: "Lie face-down on an incline chest-support pad, dumbbells or machine handles hanging straight down. Pull elbows back and squeeze shoulder blades together, keeping your chest pinned to the pad throughout. Lower with control to full arm extension." },
-    { name: "Cable Lateral Raise", sets: 2, reps: "12-15", rest: 60, effort: "rpe7", description: "Stand sideways to a low cable pulley, handle in the hand farthest from the machine. Raise your arm out to the side until it's roughly shoulder height, leading with the elbow, then lower with control. Avoid using momentum or shrugging the shoulder up." },
-    { name: "Tricep Kickback", sets: 2, reps: "10-12", rest: 60, effort: "rpe7", description: "Hinge forward slightly at the hips with a flat back, upper arm pinned against your torso and parallel to the floor. Extend the forearm straight back until the arm is fully straight, squeezing the tricep, then return with control." },
-    { name: "Cable Curl", sets: 2, reps: "10-12", rest: 60, effort: "rpe7", description: "Stand facing a low cable pulley with a straight or EZ-bar attachment. Keep elbows pinned to your sides and curl the bar up toward your shoulders, squeezing the biceps at the top, then lower under control without letting elbows drift forward." },
+    { name: "Rock Hold Dead Hang", sets: 3, reps: "20-30s hold", rest: 60, effort: "rpe8", description: "Hang from the rock climbing holds with arms fully extended, shoulder blades slightly depressed (pulled down, not shrugged). Relax your legs and breathe steadily. This directly trains the finger and grip endurance you need on a route. Build toward 30s holds before adding time." },
+    { name: "Plate Pinch Hold", sets: 3, reps: "20-30s hold", rest: 60, effort: "rpe8", description: "Pinch a weight plate (start with 10lb) between your thumb and fingers, arm at your side. Hold for time without letting the plate slip. This builds the thumb opposition and pinch strength critical for slopers and compression holds in climbing." },
     { name: "Back Extension Hold (45°)", sets: 2, reps: "20-30s hold", rest: 60, effort: "rpe7", description: "Position yourself on a 45° back extension bench, hips on the pad, legs locked under the rollers. Keep your body in a straight line from head to heels and hold this position, engaging the lower back and glutes without arching past neutral." },
-    { name: "Hollow Body Hold", sets: 3, reps: "30-45s", rest: 45, effort: "rpe8", description: "Lie on your back, arms extended overhead and legs straight. Press your lower back flat into the floor and lift shoulders and legs a few inches off the ground, forming a slight 'banana' shape. Hold while breathing normally, keeping the lower back pinned down." },
+    { name: "Hollow Body Hold", sets: 3, reps: "30-45s", rest: 45, effort: "rpe8", description: "Lie on your back, arms extended overhead and legs straight. Press your lower back flat into the floor and lift shoulders and legs a few inches off the ground, forming a slight banana shape. Hold while breathing normally, keeping the lower back pinned down." },
   ]},
-  2: { name: "Lower A", sub: "Quad Emphasis", exercises: [
+  2: { name: "Lower A", sub: "Quad Emphasis + Grip Finisher", exercises: [
     { name: "Leg Press", sets: 3, reps: "8-10", rest: 150, effort: "fail", description: "Sit in the leg press machine with feet shoulder-width on the platform, mid-foot centered. Lower the weight by bending knees toward your chest until knees reach about 90°, then press back up without locking knees out hard or letting your lower back round off the pad." },
     { name: "Lying Leg Curl", sets: 3, reps: "10-12", rest: 120, effort: "fail", description: "Lie face-down on the machine with the ankle pad just above your heels. Curl your heels toward your glutes by bending the knees, squeezing the hamstrings at the top, then lower with control without letting the weight slam down." },
     { name: "Hip Abduction Machine", sets: 2, reps: "12-15", rest: 90, effort: "rpe8", description: "Sit in the machine with knees against the pads, starting with legs together. Push your knees outward against the resistance, squeezing the outer glutes at the end range, then return with control. Keep your torso still and avoid leaning to generate momentum." },
@@ -328,41 +328,43 @@ const PLAN = {
     { name: "Leg Extension", sets: 2, reps: "12-15", rest: 60, effort: "fail", description: "Sit in the machine with the pad resting just above your ankles, knees aligned with the machine's pivot. Extend your legs until straight, squeezing the quads at the top, then lower with control back to the starting bend." },
     { name: "Back Extension Hold (45°)", sets: 2, reps: "20-30s hold", rest: 60, effort: "rpe7", description: "Position yourself on a 45° back extension bench, hips on the pad, legs locked under the rollers. Keep your body in a straight line from head to heels and hold this position, engaging the lower back and glutes without arching past neutral." },
     { name: "Standing Calf Raise", sets: 3, reps: "12-15", rest: 60, effort: "rpe7", description: "Stand on the edge of a calf raise platform or step, balls of your feet on the edge, heels hanging off. Rise up onto your toes as high as possible, pause briefly, then lower your heels below the platform level for a full stretch before repeating." },
+    { name: "Farmer Carry", sets: 3, reps: "30-40m walk", rest: 60, effort: "rpe8", description: "Pick up a heavy dumbbell in each hand, stand tall with shoulders back, and walk for 30-40 meters at a controlled pace. Grip the handles as hard as possible throughout. This builds crushing grip endurance and forearm stamina that translates directly to holding on during long routes." },
     { name: "L-Sit / Tuck Hold", sets: 3, reps: "15-30s", rest: 45, effort: "rpe8", description: "Support yourself on parallel bars or the floor with arms straight. Lift your knees toward your chest (tuck) or extend legs straight out in front (full L-sit), keeping shoulders depressed away from your ears. Hold the position while breathing steadily." },
   ]},
-  3: { name: "Upper B", sub: "Pull Emphasis", exercises: [
-    { name: "Chest-Supported Row", sets: 3, reps: "6-8", rest: 120, effort: "fail", description: "Lie face-down on an incline chest-support pad, dumbbells or machine handles hanging straight down. Pull elbows back and squeeze shoulder blades together, keeping your chest pinned to the pad throughout. Lower with control to full arm extension." },
-    { name: "Incline Dumbbell Press", sets: 3, reps: "8-10", rest: 120, effort: "rpe8", description: "Set a bench to a 30-45° incline. Press dumbbells up and slightly inward from shoulder height until arms are extended, then lower with control until elbows dip just below the bench line. Keep wrists stacked over elbows throughout." },
-    { name: "Lat Pulldown (wide grip)", sets: 2, reps: "10-12", rest: 90, effort: "fail", description: "Sit at the lat pulldown station, grip the bar wider than shoulder width. Pull the bar down to upper chest level by driving elbows down and back, leading with your lats rather than your arms, then let the bar rise with control back to full stretch." },
+  3: { name: "Push + Shoulders", sub: "Press Support + Grip Finisher", exercises: [
+    { name: "Barbell Bench Press", sets: 2, reps: "6-8", rest: 120, effort: "fail", description: "Lie on a flat bench, feet flat on floor. Grip bar slightly wider than shoulder-width. Lower bar with control to mid-chest, elbows at ~45° from torso, then press back up to full lock-out without bouncing off your chest. Reduced to 2 sets — bench is support work in a climbing-focused plan, not the priority." },
+    { name: "Seated DB Shoulder Press", sets: 2, reps: "8-10", rest: 90, effort: "rpe8", description: "Sit on a bench with back support, dumbbells at shoulder height, palms facing forward. Press both dumbbells overhead until arms are extended without locking elbows aggressively, then lower back to shoulder height with control." },
+    { name: "Cable Lateral Raise", sets: 2, reps: "12-15", rest: 60, effort: "rpe7", description: "Stand sideways to a low cable pulley, handle in the hand farthest from the machine. Raise your arm out to the side until it's roughly shoulder height, leading with the elbow, then lower with control. Avoid using momentum or shrugging the shoulder up." },
+    { name: "Cable Face Pulls", sets: 2, reps: "12-15", rest: 60, effort: "rpe7", description: "Set a cable pulley to roughly head height with a rope attachment. Pull the rope toward your face, separating the ends apart as you pull, leading with your elbows high and out to the sides. Squeeze your rear shoulders and upper back at the end of the movement. Important for shoulder health and rotator cuff balance given the high pull volume in this program." },
     { name: "Push-Ups", sets: 2, reps: "AMRAP", rest: 90, effort: "rpe8", description: "Start in a plank position, hands slightly wider than shoulders. Lower your chest toward the floor keeping your body in a straight line, elbows tracking back at roughly 45°, then press back up to full arm extension without letting hips sag or pike." },
-    { name: "Reverse Pec Deck", sets: 2, reps: "12-15", rest: 60, effort: "rpe7", description: "Sit facing into the pec deck machine, chest against the pad, grip the handles with arms extended in front of you. Pull your arms out and back, squeezing your shoulder blades together, then return with control without letting the weight crash back." },
-    { name: "Cable Face Pulls", sets: 2, reps: "12-15", rest: 60, effort: "rpe7", description: "Set a cable pulley to roughly head height with a rope attachment. Pull the rope toward your face, separating the ends apart as you pull, leading with your elbows high and out to the sides. Squeeze your rear shoulders and upper back at the end of the movement." },
-    { name: "EZ-Bar Skull Crushers", sets: 2, reps: "10-12", rest: 60, effort: "rpe7", description: "Lie on a flat bench holding an EZ-bar with arms extended straight up over your chest. Bend only at the elbows to lower the bar toward your forehead, then extend back up by straightening the elbows, keeping your upper arms still throughout." },
+    { name: "Tricep Kickback", sets: 2, reps: "10-12", rest: 60, effort: "rpe7", description: "Hinge forward slightly at the hips with a flat back, upper arm pinned against your torso and parallel to the floor. Extend the forearm straight back until the arm is fully straight, squeezing the tricep, then return with control." },
+    { name: "Wrist Roller", sets: 3, reps: "3 full rolls", rest: 60, effort: "rpe8", description: "Attach a weight to a wrist roller bar. Hold the bar at shoulder height with arms extended, then roll the weight up by alternating wrist rotations, then slowly lower it back down. This trains both forearm flexors and extensors — the balance between them is what prevents the elbow tendon issues climbers commonly develop." },
     { name: "Back Extension Hold (45°)", sets: 2, reps: "20-30s hold", rest: 60, effort: "rpe7", description: "Position yourself on a 45° back extension bench, hips on the pad, legs locked under the rollers. Keep your body in a straight line from head to heels and hold this position, engaging the lower back and glutes without arching past neutral." },
     { name: "Plank", sets: 3, reps: "45-60s", rest: 45, effort: "rpe8", description: "Support yourself on forearms and toes, body in a straight line from head to heels. Engage your core and glutes to prevent your hips from sagging or piking up. Breathe steadily and hold the position without letting your lower back arch." },
   ]},
-  4: { name: "Lower B", sub: "Posterior Chain / Glutes", exercises: [
+  4: { name: "Lower B", sub: "Posterior Chain + Grip Finisher", exercises: [
     { name: "Leg Press (higher foot placement)", sets: 3, reps: "8-10", rest: 150, effort: "fail", description: "Sit in the leg press machine with feet placed higher and slightly wider on the platform than a standard quad-focused set-up. Lower the weight by bending knees toward your chest, then press back up, focusing on driving through your heels to bias the glutes and hamstrings." },
-    { name: "Cable Pull-Through", sets: 3, reps: "10-12", rest: 120, effort: "rpe8", description: "Stand facing away from a low cable pulley, rope attachment between your legs. Hinge at the hips, pushing them back while keeping a flat back and soft knees, until you feel a stretch in your hamstrings, then drive your hips forward to standing, squeezing your glutes. Keep the movement controlled — this is not a movement to rush near failure." },
+    { name: "Cable Pull-Through", sets: 3, reps: "10-12", rest: 120, effort: "rpe8", description: "Stand facing away from a low cable pulley, rope attachment between your legs. Hinge at the hips, pushing them back while keeping a flat back and soft knees, until you feel a stretch in your hamstrings, then drive your hips forward to standing, squeezing your glutes. Keep the movement controlled — do not rush near failure." },
     { name: "Barbell Hip Thrust", sets: 2, reps: "10-12", rest: 90, effort: "rpe8", description: "Sit on the floor with upper back against a bench, barbell positioned over your hips with padding. Drive through your heels to lift your hips up until your torso is parallel to the floor, squeezing your glutes hard at the top, then lower with control." },
     { name: "Bulgarian Split Squat (bodyweight/light)", sets: 2, reps: "10/leg", rest: 90, effort: "rpe7", description: "Stand a couple feet in front of a bench, rest the top of one foot behind you on the bench. Lower straight down by bending your front knee until your back knee nearly touches the floor, then drive through the front heel to stand back up. Keep your torso upright throughout." },
     { name: "Back Extension (45°, reps)", sets: 3, reps: "10-15", rest: 90, effort: "rpe8", description: "Position yourself on a 45° back extension bench, hips on the pad, legs locked under the rollers. Lower your torso forward with control until you feel a stretch in your hamstrings and lower back, then raise back up to a straight line without hyperextending past neutral at the top." },
     { name: "Seated Calf Raise", sets: 2, reps: "15-20", rest: 60, effort: "rpe7", description: "Sit in the seated calf raise machine with the pad resting on your thighs and balls of your feet on the platform. Rise up onto your toes as high as possible, pause briefly, then lower your heels for a full stretch before repeating." },
-    { name: "Dragon Flag (or negatives)", sets: 3, reps: "5-8", rest: 60, effort: "rpe8", description: "Lie on a bench, gripping it behind your head for support. Keep your body straight and lower it from a vertical position down toward the bench with control, using only your core to control the descent, then pull back up to vertical. If full reps aren't available, perform slow negatives only (lowering phase)." },
+    { name: "Plate Pinch Hold", sets: 3, reps: "20-30s hold", rest: 60, effort: "rpe8", description: "Pinch a weight plate between your thumb and fingers, arm at your side. Hold for time without letting the plate slip. This builds the thumb opposition and pinch strength critical for slopers and compression holds in climbing." },
+    { name: "Dragon Flag (or negatives)", sets: 3, reps: "5-8", rest: 60, effort: "rpe8", description: "Lie on a bench, gripping it behind your head for support. Keep your body straight and lower it from a vertical position down toward the bench with control, using only your core to control the descent, then pull back up to vertical. If full reps aren't available, perform slow negatives only." },
   ]},
-  5: { name: "Full Body", sub: "Weak Point Day", exercises: [
-    { name: "Overhead Press (barbell)", sets: 3, reps: "6-8", rest: 120, effort: "fail", description: "Stand with the bar resting on the front of your shoulders, grip just outside shoulder width. Press the bar straight overhead until arms are fully extended, moving your head back slightly to let the bar pass, then lower back to the shoulders with control." },
-    { name: "Leg Press", sets: 2, reps: "8-10", rest: 120, effort: "rpe8", description: "Sit in the leg press machine with feet shoulder-width on the platform, mid-foot centered. Lower the weight by bending knees toward your chest until knees reach about 90°, then press back up without locking knees out hard or letting your lower back round off the pad." },
-    { name: "Weighted Pull-Ups", sets: 2, reps: "8-10", rest: 90, effort: "rpe8", description: "Hang from the bar with an overhand grip, hands just outside shoulder width. Pull your chest toward the bar by driving elbows down and back, avoid swinging or kipping. Lower under control to a full arm hang each rep." },
-    { name: "Dumbbell Lunges", sets: 2, reps: "10/leg", rest: 90, effort: "rpe7", description: "Hold a dumbbell in each hand at your sides. Step forward into a lunge, lowering your back knee toward the floor while keeping your front shin roughly vertical, then drive through the front heel to return to standing. Alternate legs or complete all reps on one side before switching." },
-    { name: "Cable Crossover / DB Fly", sets: 2, reps: "12-15", rest: 60, effort: "rpe7", description: "Stand between two high cable pulleys (or lie on a bench holding dumbbells above your chest). Bring your hands together in a wide arcing motion, leading with a slight bend in the elbows, squeezing your chest at the center, then return with control to the stretched position." },
-    { name: "Dumbbell Lateral Raise", sets: 2, reps: "15", rest: 60, effort: "rpe7", description: "Stand holding a dumbbell in each hand at your sides. Raise both arms out to the sides until roughly shoulder height, leading with your elbows, then lower with control. Avoid swinging the weights up using momentum." },
+  5: { name: "Pull & Grip B", sub: "Horizontal Pull + Forearm Strength", exercises: [
+    { name: "Rock Hold Pull-Ups (working sets)", sets: 4, reps: "4-5", rest: 90, effort: "rpe7", description: "Use the rock climbing holds on the pull-up bar. Try a different grip width or hold type than Pull & Grip A if possible. Stop at 4-5 reps, never to failure. The frequency across the week is what builds pull-up strength, not grinding any single session." },
+    { name: "Rock Hold Pull-Ups (AMRAP)", sets: 1, reps: "AMRAP", rest: 120, effort: "fail", description: "One all-out set after your working sets. Go until you can't complete another rep with good form. Track this number — it should trend upward week over week as the greasing-the-groove effect kicks in." },
+    { name: "Pull-Up Negatives", sets: 1, reps: "3-5 slow", rest: 120, effort: "rpe8", description: "Immediately after your AMRAP set. Jump or step up to the top position (chin over bar), then lower yourself as slowly as possible — aim for 5-8 seconds per rep." },
+    { name: "Chest-Supported Row", sets: 3, reps: "6-8", rest: 120, effort: "fail", description: "Lie face-down on an incline chest-support pad, dumbbells or machine handles hanging straight down. Pull elbows back and squeeze shoulder blades together, keeping your chest pinned to the pad throughout. Lower with control to full arm extension." },
+    { name: "Cable Curl", sets: 2, reps: "10-12", rest: 60, effort: "rpe7", description: "Stand facing a low cable pulley with a straight or EZ-bar attachment. Keep elbows pinned to your sides and curl the bar up toward your shoulders, squeezing the biceps at the top, then lower under control. Bicep strength is directly relevant to pulling power on overhanging routes." },
+    { name: "Rock Hold Dead Hang", sets: 4, reps: "20-40s hold", rest: 90, effort: "rpe8", description: "Hang from the rock climbing holds with arms fully extended, shoulder blades slightly depressed. Relax your legs and breathe steadily. This is the primary finger strength builder in the program. Progress by increasing hold time before adding sets. If the holds feel easy, try single-arm assisted hangs." },
+    { name: "Wrist Roller", sets: 3, reps: "3 full rolls", rest: 60, effort: "rpe8", description: "Hold the bar at shoulder height with arms extended, then roll the weight up by alternating wrist rotations, then slowly lower it back down. Trains both forearm flexors and extensors for elbow tendon balance." },
     { name: "Back Extension Hold (45°)", sets: 2, reps: "20-30s hold", rest: 60, effort: "rpe7", description: "Position yourself on a 45° back extension bench, hips on the pad, legs locked under the rollers. Keep your body in a straight line from head to heels and hold this position, engaging the lower back and glutes without arching past neutral." },
-    { name: "Push-Ups (finisher)", sets: 2, reps: "AMRAP", rest: 60, effort: "fail", description: "Start in a plank position, hands slightly wider than shoulders. Lower your chest toward the floor keeping your body in a straight line, elbows tracking back at roughly 45°, then press back up to full arm extension. Go until you can't complete another rep with good form." },
-    { name: "Hanging Leg Raises", sets: 3, reps: "10-15", rest: 45, effort: "rpe8", description: "Hang from a pull-up bar with arms fully extended. Raise your legs by curling your hips up and bringing your knees toward your chest (or keeping legs straight for a harder variation), then lower with control without swinging." },
+    { name: "Hanging Leg Raises", sets: 3, reps: "10-15", rest: 45, effort: "rpe8", description: "Hang from a pull-up bar with arms fully extended — use the rock holds if you want extra grip work. Raise your legs by curling your hips up and bringing your knees toward your chest, then lower with control without swinging." },
   ]},
 };
-
+ 
 const WEEK = [
   { label: "Mon", dayKey: "1" },
   { label: "Tue", dayKey: "2" },
@@ -372,13 +374,13 @@ const WEEK = [
   { label: "Sat", dayKey: "5" },
   { label: "Sun", dayKey: null },
 ];
-
+ 
 const EFFORT = {
   fail: { text: "FAILURE", color: C.accent },
   rpe8: { text: "RPE 8",   color: C.warn   },
   rpe7: { text: "RPE 7",   color: C.success },
 };
-
+ 
 // ---- STATE ----
 let currentDayKey = null;
 let steps = [];
@@ -388,23 +390,23 @@ let restSecondsLeft = 0;
 let restTotal = 0;
 let restPaused = false;
 let infoOpen = false;
-
+ 
 // ---- PERSIST ----
 const SAVE_KEY = 'workout_progress';
-
+ 
 function saveProgress() {
   if (!currentDayKey) return;
-  localStorage.setItem(SAVE_KEY, JSON.stringify({ dayKey: currentDayKey, stepIdx }));
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ dayKey: currentDayKey, stepIdx })); } catch(e) {}
 }
-
+ 
 function loadProgress() {
   try { return JSON.parse(localStorage.getItem(SAVE_KEY)); } catch { return null; }
 }
-
+ 
 function clearProgress() {
-  localStorage.removeItem(SAVE_KEY);
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
 }
-
+ 
 // ---- BUILD STEPS ----
 function buildSteps(plan) {
   const s = [];
@@ -420,20 +422,20 @@ function buildSteps(plan) {
   });
   return s;
 }
-
+ 
 // ---- HELPERS ----
 function fmtTime(s) {
   const m = Math.floor(s / 60);
   const sec = s % 60;
   return `${m}:${sec.toString().padStart(2, '0')}`;
 }
-
+ 
 function effortBadge(effort, large = false) {
   const e = EFFORT[effort];
   const size = large ? 'font-size:12px;padding:5px 12px;border-radius:8px' : 'font-size:10px;padding:3px 7px;border-radius:6px';
   return `<span class="effort-badge" style="${size};color:${e.color};background:${e.color}1A">${e.text}</span>`;
 }
-
+ 
 function setProgressBar() {
   if (!currentDayKey) return;
   const plan = PLAN[currentDayKey];
@@ -442,39 +444,39 @@ function setProgressBar() {
   const pct = Math.round((done / total) * 100);
   document.getElementById('progress-fill').style.width = pct + '%';
 }
-
+ 
 // ---- SCREENS ----
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
+ 
 function showSubScreen(id) {
   ['set-screen', 'rest-screen', 'complete-screen'].forEach(s => {
     document.getElementById(s).classList.remove('active');
   });
   document.getElementById(id).classList.add('active');
 }
-
+ 
 // ---- RESUME BANNER ----
 function renderResumeBanner() {
   const saved = loadProgress();
   const existing = document.getElementById('resume-banner');
   if (existing) existing.remove();
-
+ 
   if (!saved || !PLAN[saved.dayKey]) return;
-
+ 
   const plan = PLAN[saved.dayKey];
   const savedSteps = buildSteps(plan);
   const step = savedSteps[saved.stepIdx];
   if (!step) return;
-
+ 
   // figure out a human-readable position
   const doneSets = savedSteps.slice(0, saved.stepIdx).filter(s => s.type === 'set').length;
   const totalSets = plan.exercises.reduce((a, e) => a + e.sets, 0);
   const weekEntry = WEEK.find(w => w.dayKey === saved.dayKey);
   const dayLabel = weekEntry ? weekEntry.label : `Day ${saved.dayKey}`;
-
+ 
   const banner = document.createElement('div');
   banner.id = 'resume-banner';
   banner.style.cssText = `
@@ -491,11 +493,11 @@ function renderResumeBanner() {
       <button onclick="resumeWorkout()" style="padding:8px 16px;border-radius:10px;background:${C.accent};color:#000;font-weight:700;font-size:13px;border:none;cursor:pointer">Resume</button>
       <button onclick="discardProgress()" style="padding:6px 16px;border-radius:10px;background:transparent;color:${C.t3};font-size:12px;border:1px solid ${C.border};cursor:pointer">Discard</button>
     </div>`;
-
+ 
   const picker = document.getElementById('picker');
   picker.insertBefore(banner, document.getElementById('day-list'));
 }
-
+ 
 function resumeWorkout() {
   const saved = loadProgress();
   if (!saved) return;
@@ -509,12 +511,12 @@ function resumeWorkout() {
   showScreen('workout');
   renderStep();
 }
-
+ 
 function discardProgress() {
   clearProgress();
   renderResumeBanner();
 }
-
+ 
 // ---- PICKER ----
 function renderPicker() {
   const list = document.getElementById('day-list');
@@ -550,7 +552,7 @@ function renderPicker() {
   });
   renderResumeBanner();
 }
-
+ 
 function showPicker() {
   clearRestTimer();
   currentDayKey = null;
@@ -559,7 +561,7 @@ function showPicker() {
   showScreen('picker');
   renderResumeBanner();
 }
-
+ 
 // ---- OVERVIEW ----
 function selectDay(dayKey) {
   currentDayKey = dayKey;
@@ -567,14 +569,14 @@ function selectDay(dayKey) {
   const weekEntry = WEEK.find(w => w.dayKey === dayKey);
   const totalSets = plan.exercises.reduce((a, e) => a + e.sets, 0);
   const estMins = Math.round(plan.exercises.reduce((a, e) => a + e.sets * 45 + (e.sets - 1) * e.rest, 0) / 60);
-
+ 
   document.getElementById('ov-day-label').textContent = weekEntry ? weekEntry.label.toUpperCase() : `DAY ${dayKey}`;
   document.getElementById('ov-title').textContent = plan.name;
   document.getElementById('ov-sub').textContent = plan.sub;
   document.getElementById('ov-excount').textContent = plan.exercises.length;
   document.getElementById('ov-sets').textContent = totalSets;
   document.getElementById('ov-mins').textContent = `~${estMins}`;
-
+ 
   const inner = document.getElementById('ex-list-inner');
   inner.innerHTML = '';
   plan.exercises.forEach((ex, i) => {
@@ -598,10 +600,10 @@ function selectDay(dayKey) {
     };
     inner.appendChild(div);
   });
-
+ 
   showScreen('overview');
 }
-
+ 
 // ---- WORKOUT ----
 function startWorkout() {
   steps = buildSteps(PLAN[currentDayKey]);
@@ -612,7 +614,7 @@ function startWorkout() {
   showScreen('workout');
   renderStep();
 }
-
+ 
 function renderStep() {
   setProgressBar();
   const step = steps[stepIdx];
@@ -620,28 +622,28 @@ function renderStep() {
   if (step.type === 'set') renderSet(step);
   else renderRest(step);
 }
-
+ 
 function renderSet(step) {
   showSubScreen('set-screen');
   const plan = PLAN[currentDayKey];
   infoOpen = false;
-
+ 
   document.getElementById('ss-counter').textContent = `EXERCISE ${step.exIdx + 1} OF ${plan.exercises.length}`;
   document.getElementById('ss-name').textContent = step.exercise.name;
   document.getElementById('ss-reps').textContent = step.exercise.reps;
   document.getElementById('ss-setlabel').textContent = `Set ${step.setIdx + 1} of ${step.exercise.sets}`;
-
+ 
   const e = EFFORT[step.exercise.effort];
   const badge = document.getElementById('ss-effort');
   badge.textContent = e.text;
   badge.style.color = e.color;
   badge.style.background = e.color + '1A';
-
+ 
   const panel = document.getElementById('info-panel');
   panel.textContent = step.exercise.description || '';
   panel.classList.remove('open');
   document.getElementById('info-icon').setAttribute('stroke', C.t3);
-
+ 
   const pipsEl = document.getElementById('ss-pips');
   pipsEl.innerHTML = '';
   for (let i = 0; i < step.exercise.sets; i++) {
@@ -655,32 +657,32 @@ function renderSet(step) {
     pipsEl.appendChild(pip);
   }
 }
-
+ 
 function toggleInfo() {
   infoOpen = !infoOpen;
   document.getElementById('info-panel').classList.toggle('open', infoOpen);
   document.getElementById('info-icon').setAttribute('stroke', infoOpen ? C.accent : C.t3);
 }
-
+ 
 function completeSet() {
   advance();
 }
-
+ 
 function renderRest(step) {
   showSubScreen('rest-screen');
   clearRestTimer();
   restTotal = step.duration;
   restSecondsLeft = step.duration;
   restPaused = false;
-
+ 
   const next = steps[stepIdx + 1];
   let nextLabel = '';
   if (next) nextLabel = (next.type === 'set' && next.setIdx === 0) ? next.exercise.name : `Set ${next.setIdx + 1}`;
   document.getElementById('ring-next').textContent = `up next: ${nextLabel}`;
-
+ 
   updateRingDisplay();
   updatePauseBtn();
-
+ 
   restInterval = setInterval(() => {
     if (restPaused) return;
     restSecondsLeft--;
@@ -700,7 +702,7 @@ function renderRest(step) {
     }
   }, 1000);
 }
-
+ 
 function updateRingDisplay() {
   document.getElementById('ring-time').textContent = fmtTime(restSecondsLeft);
   document.getElementById('rest-label').textContent = restSecondsLeft === 0 ? 'REST COMPLETE' : 'RESTING';
@@ -712,7 +714,7 @@ function updateRingDisplay() {
   fill.setAttribute('stroke-dasharray', circ);
   fill.setAttribute('stroke-dashoffset', offset);
 }
-
+ 
 function updatePauseBtn() {
   document.getElementById('pause-label').textContent = restPaused ? 'Resume' : 'Pause';
   const icon = document.getElementById('pause-icon');
@@ -722,17 +724,17 @@ function updatePauseBtn() {
     icon.innerHTML = '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>';
   }
 }
-
+ 
 function togglePause() {
   restPaused = !restPaused;
   updatePauseBtn();
 }
-
+ 
 function skipRest() {
   clearRestTimer();
   advance();
 }
-
+ 
 function clearRestTimer() {
   if (restInterval) { clearInterval(restInterval); restInterval = null; }
   document.getElementById('rest-label').textContent = 'RESTING';
@@ -745,14 +747,14 @@ function clearRestTimer() {
     skipBtn.style.border = '';
   }
 }
-
+ 
 function advance() {
   stepIdx++;
   saveProgress();
   if (stepIdx >= steps.length) { renderComplete(); return; }
   renderStep();
 }
-
+ 
 function renderComplete() {
   clearRestTimer();
   clearProgress();
@@ -762,25 +764,10 @@ function renderComplete() {
   showSubScreen('complete-screen');
   document.getElementById('progress-fill').style.width = '100%';
 }
-
-// ---- PWA SERVICE WORKER ----
-if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'workout-v1';
-    self.addEventListener('install', e => {
-      e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/workout-app.html'])));
-    });
-    self.addEventListener('fetch', e => {
-      e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
-    });
-  `;
-  const blob = new Blob([swCode], { type: 'application/javascript' });
-  const swUrl = URL.createObjectURL(blob);
-  navigator.serviceWorker.register(swUrl).catch(() => {});
-}
-
+ 
 // ---- INIT ----
 renderPicker();
 </script>
 </body>
 </html>
+ 
